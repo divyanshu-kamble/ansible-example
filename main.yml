@@ -17,8 +17,18 @@
 
       #/var/www/html$ directory for webpage default 
 
-   - name: Configure webpage for custom input
-     ansible.builtin.replace:
-        command: cat /dev/null > /var/www/html/index.nginx-debian.html
-        path: /var/www/html/index.nginx-debian.html
-        replace: <h1>hello this file in edited from ansible<h1>
+  #  - name: Configure webpage for custom input
+  #    ansible.builtin.replace:
+  #       command: cat /dev/null > /var/www/html/index.nginx-debian.html
+  #       path: /var/www/html/index.nginx-debian.html
+  #       regexps: '$^'
+  #       replace: <h1>hello this file in edited from ansible<h1>
+
+   - name: Replace file contents with required
+     shell:  
+      cmd: echo "This is my new website" > /var/www/html/index.nginx-debian.html
+
+   - name: restart nginx service
+     ansible.builtin.service:
+       name: nginx
+       state: restarted
