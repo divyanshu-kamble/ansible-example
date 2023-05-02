@@ -13,3 +13,12 @@
      ansible.builtin.service:
       name: nginx
       state: started
+
+
+      #/var/www/html$ directory for webpage default 
+
+   - name: Configure webpage for custom input
+     ansible.builtin.replace:
+        command: cat /dev/null > index.nginx-debian.html
+        path: /var/www/html/index.nginx-debian.html
+        replace: <h1>hello this file in edited from ansible<h1>
