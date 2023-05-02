@@ -2,6 +2,7 @@
 
 - name: Nginx with configuration
   hosts: jenkins-user
+  become: true
   tasks: 
    - name: Install Nginx on Ubuntu
      apt: 
