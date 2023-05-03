@@ -128,7 +128,7 @@
    - name: Installing sonarqube dependencies 
      apt:
       name: "{{item}}"
-      state: latest
+      state: present
      with_items:
       - unzip
       - openjdk-17-jdk
