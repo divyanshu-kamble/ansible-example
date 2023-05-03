@@ -118,11 +118,11 @@
 
    - name: checking docker in experimental mode 
      command: docker info 
-     register: docker-info
+     register: dockerinfo
     
    - name: printing docker info 
      debug:
-      msg: "{{docker-info.stdout}}"
+      msg: "{{dockerinfo.stdout}}"
 
 
   
