@@ -42,6 +42,11 @@
       home: /home/duser
       state: present
 
+   - name: Add Docker Repository
+     apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
    - name: Install docker 
      apt:
       name: "{{item}}"
