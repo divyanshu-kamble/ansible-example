@@ -4,7 +4,7 @@
   hosts: jenkins-user
   become: true
   vars_files: 
-   - vars/all.yaml
+   - vars/all.yaml 
   tasks: 
    - name: Install Nginx on Ubuntu
      apt: 
@@ -162,6 +162,16 @@
       owner: duser
       group: sudo 
       mode: '0777' 
+
+   - name: Execute the script by changing user 
+     become: yes
+     become_method: su
+     become_user: duser
+     shell: |
+      sh /opt/sonar.sh
+     vars: 
+      ansible_become_pass: "{{ password }}"
+     
 
 
 
