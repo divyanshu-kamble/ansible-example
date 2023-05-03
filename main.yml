@@ -18,7 +18,7 @@
      shell: "{{ item }}"
      loop:
      - sh -c "echo -n 'dinu:' >> /etc/nginx/.htpasswd"
-     - sh -c "openssl passwd -crypt nginx123# >> /etc/nginx/.htpasswd"
+     - sh -c "openssl passwd -6 -salt <AbC123> <<< "<nginx123#>">> /etc/nginx/.htpasswd"
       
 
   #  - name: restart nginx service
