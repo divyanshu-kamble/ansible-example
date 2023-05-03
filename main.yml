@@ -15,16 +15,16 @@
       state: started
 
    - name: Setting Up Nginx authentication
-     shell: "{{ item }}"
+     shell: {{ item }}
      loop:
      - sh -c "echo -n 'dinu:' >> /etc/nginx/.htpasswd"
-     - sh -c "openssl passwd -apr1 >> /etc/nginx/.htpasswd"
+     - sh -c "openssl passwd -nginx123# >> /etc/nginx/.htpasswd"
       
 
-   - name: restart nginx service
-     ansible.builtin.service:
-      name: nginx
-      state: restarted
+  #  - name: restart nginx service
+  #    ansible.builtin.service:
+  #     name: nginx
+  #     state: restarted
 
 
       #/var/www/html$ directory for webpage default 
