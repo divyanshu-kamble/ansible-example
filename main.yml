@@ -99,12 +99,29 @@
       url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
       dest: /usr/local/bin/docker-compose
       mode: 'u+x,g+x'
-      
+
    - name: Change file ownership, group and permissions
      ansible.builtin.file:
       path: /usr/local/bin/docker-compose
       owner: ubuntu
       group: ubuntu
+
+   - name: Docker run on experimental mode  
+     command: echo '{\n    "experimental": true\n}' > /etc/docker/daemon.json
+
+   - name: Restarting docker service
+     service:
+      name: docker
+      state: restarted
+      enabled: yes
+
+   - name: checking docker in experimental mode 
+     command: docker info 
+     register: docker-info
+    
+   - name: printing docker info 
+     msg: "{{docker-info.stdout}}"
+
 
   
    
