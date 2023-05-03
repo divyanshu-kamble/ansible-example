@@ -53,9 +53,8 @@
       state: present
       update_cache: yes
      with_items:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
+      - docker
+      - docker-compose
 
    - name: Start the docker service
      ansible.builtin.service:
