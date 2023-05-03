@@ -107,7 +107,8 @@
       group: ubuntu
 
    - name: Docker run on experimental mode  
-     command: echo '{\n    "experimental": true\n}' > /etc/docker/daemon.json
+     shell: |
+      echo '{\n    "experimental": true\n}' > /etc/docker/daemon.json
 
    - name: Restarting docker service
      service:
