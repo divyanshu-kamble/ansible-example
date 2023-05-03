@@ -137,7 +137,6 @@
    - name: Switching to sonarqube user 
      become_method: su
      become_user: duser
-     ansible_become_password: "{{ password }}"
 
    - name: Creating dir for sonarqube
      ansible.builtin.file:
@@ -166,6 +165,7 @@
   
    
       
+#     ansible_become_password: "{{ password }}"
 
 
   #  - name: Configure webpage for custom input
