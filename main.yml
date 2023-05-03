@@ -25,6 +25,7 @@
       system: true
       createhome: yes
       home: /home/duser
+      state: present
    
       
 
