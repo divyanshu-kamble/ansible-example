@@ -15,10 +15,10 @@
       state: started
 
    - name: Setting Up Nginx authentication
-     shell: "{{ item }}"
-     loop:
+     command: "{{ item }}"
+     with_items:
      - sh -c "echo -n 'dinu:' >> /etc/nginx/.htpasswd"
-     - sh -c "openssl passwd -6 -salt <AbC123> <<< "<nginx123#>">> /etc/nginx/.htpasswd"
+     - sh -c "openssl passwd -6 -salt 'AbC123' <<< nginx123# >> /etc/nginx/.htpasswd"
       
 
   #  - name: restart nginx service
