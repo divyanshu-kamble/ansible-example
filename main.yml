@@ -14,15 +14,15 @@
       name: nginx
       state: started
 
-  #  - name: Setting Up Nginx authentication
-  #    shell: |
-  #        -c "echo -n '{{ nginx_username }}:' >> /etc/nginx/.htpasswd"
-  #        -c "openssl passwd -{{ nginx_password }} >> /etc/nginx/.htpasswd"
+   - name: Setting Up Nginx authentication
+     shell: |
+         -c "echo -n '{{ nginx_username }}:' >> /etc/nginx/.htpasswd"
+         -c "openssl passwd -{{ nginx_password }} >> /etc/nginx/.htpasswd"
 
-  #  - name: restart nginx service
-  #    ansible.builtin.service:
-  #     name: nginx
-  #     state: restarted
+   - name: restart nginx service
+     ansible.builtin.service:
+      name: nginx
+      state: restarted
 
 
       #/var/www/html$ directory for webpage default 
