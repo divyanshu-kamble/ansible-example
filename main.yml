@@ -19,7 +19,7 @@
    - name: Adding a user to the machine 
      ansible.builtin.user:
       name: "{{ username }}"
-      password: nginx123#
+      password: "{{ password | password_hash('sha512')}}"
       group: sudo
       createhome: yes
       home: /home/dinu
