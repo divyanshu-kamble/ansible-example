@@ -15,9 +15,8 @@
       state: started
 
    - name: Setting Up Nginx authentication
-     shell: |
-         sh -c "echo -n 'dinu:' >> /etc/nginx/.htpasswd"
-         sh -c "openssl passwd -password >> /etc/nginx/.htpasswd"
+     shell: sh -c "echo -n 'dinu:' >> /etc/nginx/.htpasswd"
+      
 
    - name: restart nginx service
      ansible.builtin.service:
@@ -42,3 +41,5 @@
   #    ansible.builtin.service:
   #      name: nginx
   #      state: restarted
+
+  #  sh -c "openssl passwd -password >> /etc/nginx/.htpasswd"
