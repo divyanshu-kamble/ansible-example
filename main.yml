@@ -14,21 +14,16 @@
       name: nginx
       state: started
 
-   - name: Setting Up Nginx authentication
-     command: "{{ item }}"
-     with_items:
-     - sh -c "echo -n 'dinu:' >> /etc/nginx/.htpasswd"
-     - openssl passwd -1 -salt 'AbC123' <<< 'nginx123#' >> /etc/nginx/.htpasswd
+   - name: Adding a user to the machine 
+     ansible.builtin.user:
+      name: "{{ username }}"
+      password: "{{ password }}"
+      group: sudo
+      createhome: yes
+      home: /home/dinu
+   
       
 
-  #  - name: restart nginx service
-  #    ansible.builtin.service:
-  #     name: nginx
-  #     state: restarted
-
-
-      #/var/www/html$ directory for webpage default 
-      #:/etc/nginx/sites-enabled (location for auth permission allow )
 
   #  - name: Configure webpage for custom input
   #    ansible.builtin.replace:
@@ -45,5 +40,3 @@
   #    ansible.builtin.service:
   #      name: nginx
   #      state: restarted
-
-  #  sh -c "openssl passwd -password >> /etc/nginx/.htpasswd"
