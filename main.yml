@@ -21,8 +21,10 @@
       name: "{{ username }}"
       password: "{{ password | password_hash('sha512')}}"
       group: sudo
+      shell: /bin/bash
+      system: true
       createhome: yes
-      home: /home/dinu
+      home: /home/duser
    
       
 
