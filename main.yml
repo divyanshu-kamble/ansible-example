@@ -20,7 +20,20 @@
      ansible.builtin.user:
       name: "{{ username }}"
       password: "{{ password | password_hash('sha512')}}"
-      group: root
+      group: admin
+      append: true
+      shell: /bin/bash
+      system: true
+      createhome: yes
+      home: /home/duser
+      state: absent
+
+   - name: Adding a user to the machine 
+     ansible.builtin.user:
+      name: "{{ username }}"
+      password: "{{ password | password_hash('sha512')}}"
+      group: admin
+      append: true
       shell: /bin/bash
       system: true
       createhome: yes
