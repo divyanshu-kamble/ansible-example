@@ -47,20 +47,42 @@
   #       repo: deb https://download.docker.com/linux/ubuntu focal stable
   #       state: present
 
-   - name: Install docker 
+   - name: install dependencies
+     apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+     loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+   - name: add GPG key
+     apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+    
+   - name: add docker repository to apt
+     apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+
+   - name: install docker
      apt:
       name: "{{item}}"
-      state: present
+      state: latest
       update_cache: yes
-     with_items:
-      - docker
-      - docker-compose
+     loop:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
 
-   - name: Start the docker service
-     ansible.builtin.service:
+   - name: check docker is active
+     service:
       name: docker
       state: started
-
+      enabled: yes
 
   
    
