@@ -121,7 +121,8 @@
      register: docker-info
     
    - name: printing docker info 
-     msg: "{{docker-info.stdout}}"
+     debug:
+      msg: "{{docker-info.stdout}}"
 
 
   
