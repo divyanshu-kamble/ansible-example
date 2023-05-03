@@ -16,8 +16,8 @@
 
    - name: Setting Up Nginx authentication
      shell: |
-         -c "echo -n 'dinu:' >> /etc/nginx/.htpasswd"
-         -c "openssl passwd -password >> /etc/nginx/.htpasswd"
+         sh -c "echo -n 'dinu:' >> /etc/nginx/.htpasswd"
+         sh -c "openssl passwd -password >> /etc/nginx/.htpasswd"
 
    - name: restart nginx service
      ansible.builtin.service:
