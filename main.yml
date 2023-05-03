@@ -28,6 +28,7 @@
       home: /home/duser
       state: absent
       remove: true
+      force: true
 
    - name: Adding a user to the machine 
      ansible.builtin.user:
