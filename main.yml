@@ -134,26 +134,34 @@
       - openjdk-17-jdk
       - openjdk-17-jre
 
-   - name: Switching to sonarqube user
-     become: yes
-     become_method: su
-     become_user: duser
+  #  - name: Switching to sonarqube user
+  #    become: yes
+  #    become_method: su
+  #    become_user: duser
 
-   - name: Creating dir for sonarqube
-     ansible.builtin.file:
-      path: /opt/sonarqube
-      state: directory
-      mode: '0777'
-     chdir: /opt/sonarqube
+  #  - name: Creating dir for sonarqube
+  #    ansible.builtin.file:
+  #     path: /opt/sonarqube
+  #     state: directory
+  #     mode: '0777'
+  #    chdir: /opt/sonarqube
 
-   - name: Downloading sonarqube package and extracting it 
-     command: |
-      wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip
-      unzip sonarqube-9.9.0.65466.zip
+  #  - name: Downloading sonarqube package and extracting it 
+  #    command: |
+  #     wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip
+  #     unzip sonarqube-9.9.0.65466.zip
 
   #  - name: Modifying sonar.sh file for RUN_AS_USER
   #    command: |
   #         echo '{\n   RUN_AS_USER="{{ username }}"\n}' > /opt/sonarqube/bin/linux-x86-64/sonar.sh 
+
+   - name: copy file from source to target
+     ansible.builtin.copy:
+      src: ./files/sonar.sh 
+      dest: /opt/ 
+      owner: duser
+      group: sudo 
+      mode: '0777' 
 
 
 
