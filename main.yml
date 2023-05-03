@@ -52,12 +52,13 @@
         name: "{{item}}"
         state: present
         update_cache: yes
-     loop:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - gnupg-agent
-        - software-properties-common
+     with_items:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+
    - name: add GPG key
      apt_key:
       url: https://download.docker.com/linux/ubuntu/gpg
@@ -73,7 +74,7 @@
       name: "{{item}}"
       state: latest
       update_cache: yes
-     loop:
+     with_items:
       - docker-ce
       - docker-ce-cli
       - containerd.io
