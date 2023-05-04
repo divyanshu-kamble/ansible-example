@@ -166,8 +166,7 @@
    - name: Execute the script by changing user 
      become: yes
      become_user: duser
-     shell: |
-      sh /opt/sonar.sh
+     command: sh /opt/sonar.sh
      vars: 
       ansible_become_password: "{{ password }}"
 
