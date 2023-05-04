@@ -3,7 +3,7 @@ cd /opt/
 
 rm -rf /opt/sonarscanner.zip || true
 rm -rf /opt/sonarscanner || true
-rm -rf sonar-scanner-cli-4.7.0.2747-linux.zip || true
+# rm -rf sonar-scanner-cli-4.7.0.2747-linux.zip || true
 
 sudo wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip -O /opt/sonarscanner.zip
 
