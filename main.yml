@@ -34,7 +34,7 @@
      ansible.builtin.user:
       name: "{{ username }}"
       password: "{{ password | password_hash('sha512')}}"
-      group: sudo
+      group: admin
       append: true
       shell: /bin/bash
       system: true
@@ -160,17 +160,37 @@
      ansible.builtin.copy:
       src: ./files/sonar.sh 
       dest: /opt/ 
-      owner: duser
-      group: sudo 
-      mode: '0777' 
+      owner: root
+      group: root
+      mode: '0777'
+
+   - name: Adding a user to the machine
+     ansible.builtin.user:
+      name: sonar
+      shell: /bin/bash
+      system: true
+      createhome: yes
+      home: /home/sonar
+      state: present
+
+
+   - name: "set max_map_count value (required by elasticsearch)"
+     sysctl:
+      name: vm.max_map_count
+      value: 262144
+      state: present
 
    - name: Execute the script by changing user 
-     become: yes
-     become_user: duser
-     command: sh /opt/sonar.sh
-     vars: 
-      ansible_become_password: "{{ password }}"
+     command: /opt/sonar.sh
+       #vars: 
+       #ansible_become_password: "{{ password }}"
+    
 
+   - name: Start SonarQube Service
+     command: /opt/sonarqube/bin/linux-x86-64/sonar.sh start
+     become: yes
+     become_user: sonar
+     
 
 
      

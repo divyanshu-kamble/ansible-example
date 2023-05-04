@@ -1,19 +1,20 @@
 #!/bin/bash
 
 #downloading sonarqube file
+#sudo su
+#sudo su duser
 whoami
+pwd
 cd /opt/
-sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip
-sudo unzip sonarqube-9.9.0.65466.zip 
-sudo mv sonarqube-9.9.0.65466 /opt/sonarqube
-rm -rf sonarqube-9.9.0.65466.zip
-chown -r duser:sudo /opt/sonarqube
-
-
-
-# sudo echo '{\n   RUN_AS_USER="duser"\n}' > /opt/sonarqube-9.9.0.65466/bin/linux-x86-64/sonar.sh 
-
-# & /opt/sonarqube-9.9.0.65466/bin/linux-x86-64/sonar.sh start
-
+pwd
+rm -rf /opt/sonarqube || true
+rm -rf /opt/sonarqube.zip || true
+#touch test.txt
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip -O /opt/sonarqube.zip
+sudo unzip sonarqube.zip 
+sudo mv sonarqube-9.9.0.65466  sonarqube
+sed -i 's/#sonar.web.port=9000/sonar.web.port=9001/g' /opt/sonarqube/conf/sonar.properties
+sed -i 's/#sonar.search.port=9001/sonar.search.port=9002/g' /opt/sonarqube/conf/sonar.properties
+chown -R sonar:sonar /opt/sonarqube
 
 
