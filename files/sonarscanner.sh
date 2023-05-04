@@ -7,5 +7,7 @@ unzip sonarscanner.zip
 
 rm sonarscanner.zip
 
-sudo mv sonar-scanner-cli-4.7.0.2747-linux  sonarqube
+sudo mv sonar-scanner-cli-4.7.0.2747-linux  sonarscanner
+
+export PATH="$PATH:/opt/sonarscanner/bin"
 
