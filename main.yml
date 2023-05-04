@@ -6,202 +6,202 @@
   vars_files: 
    - vars/all.yaml 
   tasks: 
-   - name: Install Nginx on Ubuntu
-     apt: 
-      name: nginx
-      state: present
+#    - name: Install Nginx on Ubuntu
+#      apt: 
+#       name: nginx
+#       state: present
 
-   - name: Start the nginx service, if not started
-     ansible.builtin.service:
-      name: nginx
-      state: started
+#    - name: Start the nginx service, if not started
+#      ansible.builtin.service:
+#       name: nginx
+#       state: started
 
-   - name: Removing a user if present
-     ansible.builtin.user:
-      name: "{{ username }}"
-      password: "{{ password | password_hash('sha512')}}"
-      group: admin
-      append: true
-      shell: /bin/bash
-      system: true
-      createhome: yes
-      home: /home/duser
-      state: absent
-      remove: true
-      force: true
+#    - name: Removing a user if present
+#      ansible.builtin.user:
+#       name: "{{ username }}"
+#       password: "{{ password | password_hash('sha512')}}"
+#       group: admin
+#       append: true
+#       shell: /bin/bash
+#       system: true
+#       createhome: yes
+#       home: /home/duser
+#       state: absent
+#       remove: true
+#       force: true
 
-   - name: Adding a user to the machine 
-     ansible.builtin.user:
-      name: "{{ username }}"
-      password: "{{ password | password_hash('sha512')}}"
-      group: admin
-      append: true
-      shell: /bin/bash
-      system: true
-      createhome: yes
-      home: /home/duser
-      state: present
+#    - name: Adding a user to the machine 
+#      ansible.builtin.user:
+#       name: "{{ username }}"
+#       password: "{{ password | password_hash('sha512')}}"
+#       group: admin
+#       append: true
+#       shell: /bin/bash
+#       system: true
+#       createhome: yes
+#       home: /home/duser
+#       state: present
 
-  #  - name: Add Docker Repository
-  #    apt_repository:
-  #       repo: deb https://download.docker.com/linux/ubuntu focal stable
-  #       state: present
+#   #  - name: Add Docker Repository
+#   #    apt_repository:
+#   #       repo: deb https://download.docker.com/linux/ubuntu focal stable
+#   #       state: present
 
-   - name: install dependencies
-     apt:
-        name: "{{item}}"
-        state: present
-     with_items:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg-agent
-      - software-properties-common
+#    - name: install dependencies
+#      apt:
+#         name: "{{item}}"
+#         state: present
+#      with_items:
+#       - apt-transport-https
+#       - ca-certificates
+#       - curl
+#       - gnupg-agent
+#       - software-properties-common
 
-   - name: add GPG key
-     apt_key:
-      url: https://download.docker.com/linux/ubuntu/gpg
-      state: present
+#    - name: add GPG key
+#      apt_key:
+#       url: https://download.docker.com/linux/ubuntu/gpg
+#       state: present
     
-   - name: add docker repository to apt
-     apt_repository:
-      repo: deb https://download.docker.com/linux/ubuntu bionic stable
-      state: present
+#    - name: add docker repository to apt
+#      apt_repository:
+#       repo: deb https://download.docker.com/linux/ubuntu bionic stable
+#       state: present
 
-   - name: install docker
-     apt:
-      name: "{{item}}"
-      state: latest
-     with_items:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
+#    - name: install docker
+#      apt:
+#       name: "{{item}}"
+#       state: latest
+#      with_items:
+#       - docker-ce
+#       - docker-ce-cli
+#       - containerd.io
 
-   - name: check docker is active
-     service:
-      name: docker
-      state: started
-      enabled: yes
+#    - name: check docker is active
+#      service:
+#       name: docker
+#       state: started
+#       enabled: yes
 
-   - name: Ensure group "docker" exists
-     ansible.builtin.group:
-        name: docker
-        state: present
+#    - name: Ensure group "docker" exists
+#      ansible.builtin.group:
+#         name: docker
+#         state: present
 
-   - name: adding ubuntu to docker group
-     user:
-      name: ubuntu
-      groups: docker
-      append: yes
+#    - name: adding ubuntu to docker group
+#      user:
+#       name: ubuntu
+#       groups: docker
+#       append: yes
 
-   - name: Install docker-compose
-     get_url:
-      url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
-      dest: /usr/local/bin/docker-compose
-      mode: 'u+x,g+x'
+#    - name: Install docker-compose
+#      get_url:
+#       url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+#       dest: /usr/local/bin/docker-compose
+#       mode: 'u+x,g+x'
 
-   - name: Change file ownership, group and permissions
-     ansible.builtin.file:
-      path: /usr/local/bin/docker-compose
-      owner: ubuntu
-      group: ubuntu
+#    - name: Change file ownership, group and permissions
+#      ansible.builtin.file:
+#       path: /usr/local/bin/docker-compose
+#       owner: ubuntu
+#       group: ubuntu
 
-   - name: Docker run on experimental mode  
-     shell: |
-      echo '{\n    "experimental": true\n}' > /etc/docker/daemon.json
+#    - name: Docker run on experimental mode  
+#      shell: |
+#       echo '{\n    "experimental": true\n}' > /etc/docker/daemon.json
 
-   - name: Restarting docker service
-     service:
-      name: docker
-      state: restarted
-      enabled: yes
+#    - name: Restarting docker service
+#      service:
+#       name: docker
+#       state: restarted
+#       enabled: yes
 
-   - name: checking docker in experimental mode 
-     command: docker info 
-     register: dockerinfo
+#    - name: checking docker in experimental mode 
+#      command: docker info 
+#      register: dockerinfo
     
-   - name: printing docker info 
-     debug:
-      msg: "{{dockerinfo.stdout}}"
+#    - name: printing docker info 
+#      debug:
+#       msg: "{{dockerinfo.stdout}}"
 
 
-   - name: Installing sonarqube dependencies 
-     apt:
-      name: "{{item}}"
-      state: present
-     with_items:
-      - unzip
-      - acl
-      - openjdk-17-jdk
-      - openjdk-17-jre
+#    - name: Installing sonarqube dependencies 
+#      apt:
+#       name: "{{item}}"
+#       state: present
+#      with_items:
+#       - unzip
+#       - acl
+#       - openjdk-17-jdk
+#       - openjdk-17-jre
 
-  #  - name: Switching to sonarqube user
-  #    become: yes
-  #    become_method: su
-  #    become_user: duser
+#   #  - name: Switching to sonarqube user
+#   #    become: yes
+#   #    become_method: su
+#   #    become_user: duser
 
-  #  - name: Creating dir for sonarqube
-  #    ansible.builtin.file:
-  #     path: /opt/sonarqube
-  #     state: directory
-  #     mode: '0777'
-  #    chdir: /opt/sonarqube
+#   #  - name: Creating dir for sonarqube
+#   #    ansible.builtin.file:
+#   #     path: /opt/sonarqube
+#   #     state: directory
+#   #     mode: '0777'
+#   #    chdir: /opt/sonarqube
 
-  #  - name: Downloading sonarqube package and extracting it 
-  #    command: |
-  #     wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip
-  #     unzip sonarqube-9.9.0.65466.zip
+#   #  - name: Downloading sonarqube package and extracting it 
+#   #    command: |
+#   #     wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip
+#   #     unzip sonarqube-9.9.0.65466.zip
 
-  #  - name: Modifying sonar.sh file for RUN_AS_USER
-  #    command: |
-  #         echo '{\n   RUN_AS_USER="{{ username }}"\n}' > /opt/sonarqube/bin/linux-x86-64/sonar.sh 
+#   #  - name: Modifying sonar.sh file for RUN_AS_USER
+#   #    command: |
+#   #         echo '{\n   RUN_AS_USER="{{ username }}"\n}' > /opt/sonarqube/bin/linux-x86-64/sonar.sh 
 
-   - name: copy file from source to target
-     ansible.builtin.copy:
-      src: ./files/sonar.sh 
-      dest: /opt/ 
-      owner: root
-      group: root
-      mode: '0777'
+#    - name: copy file from source to target
+#      ansible.builtin.copy:
+#       src: ./files/sonar.sh 
+#       dest: /opt/ 
+#       owner: root
+#       group: root
+#       mode: '0777'
 
-   - name: Adding a user to the machine
-     ansible.builtin.user:
-      name: sonar
-      shell: /bin/bash
-      system: true
-      createhome: yes
-      home: /home/sonar
-      state: present
+#    - name: Adding a user to the machine
+#      ansible.builtin.user:
+#       name: sonar
+#       shell: /bin/bash
+#       system: true
+#       createhome: yes
+#       home: /home/sonar
+#       state: present
 
 
-   - name: "set max_map_count value (required by elasticsearch)"
-     sysctl:
-      name: vm.max_map_count
-      value: 262144
-      state: present
+#    - name: "set max_map_count value (required by elasticsearch)"
+#      sysctl:
+#       name: vm.max_map_count
+#       value: 262144
+#       state: present
 
-   - name: Execute the script by changing user 
-     command: /opt/sonar.sh
-       #vars: 
-       #ansible_become_password: "{{ password }}"
+#    - name: Execute the script by changing user 
+#      command: /opt/sonar.sh
+#        #vars: 
+#        #ansible_become_password: "{{ password }}"
     
 
-   - name: Start SonarQube Service
-     command: /opt/sonarqube/bin/linux-x86-64/sonar.sh start
-     become: yes
-     become_user: sonar
+#    - name: Start SonarQube Service
+#      command: /opt/sonarqube/bin/linux-x86-64/sonar.sh start
+#      become: yes
+#      become_user: sonar
 
 
-   - name: copy file from source to target
-     ansible.builtin.copy:
-      src: ./files/sonarscanner.sh 
-      dest: /opt/ 
-      owner: root
-      group: root
-      mode: '0777'
+#    - name: copy file from source to target
+#      ansible.builtin.copy:
+#       src: ./files/sonarscanner.sh 
+#       dest: /opt/ 
+#       owner: root
+#       group: root
+#       mode: '0777'
 
-   - name: Execute sonarscanner script
-     command: /opt/sonarscanner.sh
+#    - name: Execute sonarscanner script
+#      command: /opt/sonarscanner.sh
 
 
    - name: "nvm"
