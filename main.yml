@@ -190,6 +190,19 @@
      command: /opt/sonarqube/bin/linux-x86-64/sonar.sh start
      become: yes
      become_user: sonar
+
+
+   - name: copy file from source to target
+     ansible.builtin.copy:
+      src: ./files/sonarscanner.sh 
+      dest: /opt/ 
+      owner: root
+      group: root
+      mode: '0777'
+
+   - name: Execute sonarscanner script
+     command: /opt/sonarscanner.sh
+
      
 
 
