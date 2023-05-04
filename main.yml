@@ -220,7 +220,7 @@
         create: yes 
 
    - name: "source profile"
-     shell: source ~/.profile
+     shell: . ~/.profile
 
 
    - name: "nvm checking"
