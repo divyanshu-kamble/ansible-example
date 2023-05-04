@@ -216,7 +216,7 @@
    - name: Source nvm in ~/.{{ item }}
      lineinfile: >
         dest=~/.{{ item }}
-        line="source ~/.nvm/nvm.sh"
+        line=". ~/.nvm/nvm.sh"
         create=yes
      tags: nvm
      with_items:
@@ -226,7 +226,7 @@
    - name: Install node and set version
      become: yes
      become_user: root
-     shell: "source /root/.nvm/nvm.sh"
+     shell: ". /root/.nvm/nvm.sh"
      args:
       executable: /bin/bash
 
