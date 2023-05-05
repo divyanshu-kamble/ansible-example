@@ -9,7 +9,7 @@ pipeline {
                 sudo su
                 whoami
                 pwd
-                ansible-playbook main.yml -i inventory -vvvv
+                ansible-playbook main.yml -i inventory
                 '''
             }
         }
