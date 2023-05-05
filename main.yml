@@ -14,13 +14,23 @@
       ansible.builtin.import_role:
        name: create-user
        
-    #- name: install dep 
-    - ansible.builtin.import_role:
-       name: "{{ item }}"
-      with_items:
-       - docker_with_experimental_mode 
+    - name: install dep 
+      ansible.builtin.import_role:
+       name: docker_with_experimental_mode
+ 
      
+    - name: install sonarqube
+      ansible.builtin.import_role:
+       name: sonarqube
 
+    - name: install sonarscanner
+      ansible.builtin.import_role:
+       name: sonar-scanner
+
+
+    - name: install nvm & node
+      ansible.builtin.import_role:
+       name: nvm_and_node
 
 
 
