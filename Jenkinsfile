@@ -5,7 +5,7 @@ pipeline {
             steps{
                 sh '''
                 pwd
-                ansible-playbook main.yml -i inventory -vvv
+                ansible-playbook main.yml -i inventory -vvvv
                 '''
             }
         }
