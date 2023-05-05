@@ -13,8 +13,15 @@
     - name: create a user
       ansible.builtin.import_role:
        name: create-user
-      vars_from:
-            C:/Users/Dinu/Documents/ansible-test/roles/create-user/vars/all.yml
+       
+    #- name: install dep 
+    - ansible.builtin.import_role:
+       name: "{{ item }}"
+      with_items:
+       - docker_with_experimental_mode 
+     
+
+
 
 
 
