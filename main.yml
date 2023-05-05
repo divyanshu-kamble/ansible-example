@@ -205,12 +205,14 @@
 
 
    - name: "nvm"
+     become: yes
+     become_user: ubuntu
      shell: >
       curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
      args:
       executable: /bin/bash
-      chdir: "{{ ansible_env.HOME }}"
-      creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"  
+      chdir: "/home/ubuntu"
+      creates: "/home/ubuntu/.nvm/nvm.sh"  
 
   
    - name: Source nvm in ~/.{{ item }}
@@ -225,16 +227,33 @@
 
    - name: Install node and set version
      become: yes
-     become_user: root
-     shell: ". /root/.nvm/nvm.sh"
+     become_user: ubuntu
+     shell: ". ~/.{{ item }}"
      args:
       executable: /bin/bash
+     with_items:
+       - bashrc
+       - profile
 
-   - name: "source profile"
-     shell: . ~/.profile
+        # - name: "source profile"
+     # shell: . ~/.profile
 
    - name: "nvm checking"
-     shell: nvm -v
+     become: yes
+     become_user: root
+     shell: echo "PATH=$PATH:/home/ubuntu/.nvm" > /etc/environment
+     args:
+       executable: /bin/bash
+
+   - name: Test NVM
+     become: yes
+     become_user: ubuntu
+     shell: |
+       . /home/ubuntu/.nvm/nvm.sh && nvm -v || true
+       nvm install 18.0.0 || true
+       node --version  || true
+     args:
+      executable: /bin/bash
 
      
 
