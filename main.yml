@@ -5,13 +5,17 @@
   become: true
   vars_files: 
    - vars/all.yaml 
-  roles: 
-    - nginx
-    - create-user
-    - docker with experimental mode 
-    - sonarqube 
-    - sonar-scanner
-    - nvm and node 
+  tasks:
+    - name: install nginx dependencies 
+      ansible.builtin.import_role:
+       name: nginx
+ 
+    - name: create a user
+      ansible.builtin.import_role:
+       name: create-user
+      vars_from:
+            C:/Users/Dinu/Documents/ansible-test/roles/create-user/vars/all.yml
+
 
 
 
