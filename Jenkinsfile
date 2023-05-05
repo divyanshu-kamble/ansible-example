@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'master'}
+    agent none
     stages {
         stage('executing ansible script') {
             steps{
