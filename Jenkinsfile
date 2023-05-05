@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('executing ansible script') {
             steps{
-                sh "whoami"
+                sh "pwd"
             }
         }
     }
