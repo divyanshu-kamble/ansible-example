@@ -5,10 +5,6 @@ pipeline {
             steps{
                 sh '''
                 whoami
-                exit
-                sudo su
-                whoami
-                pwd
                 ansible-playbook main.yml -i inventory
                 '''
             }
